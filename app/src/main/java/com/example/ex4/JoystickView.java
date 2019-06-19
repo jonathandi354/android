@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,8 +20,8 @@ public class JoystickView extends View {
     private MoveHandler handler;
     private Paint color_in;
     private Paint color_out;
-    private int r_in = 100;
-    private int r_out = 500;
+    private int r_in;
+    private int r_out;
 //    private int x_in;
 //    private int y_in;
 //    private int x_out;
@@ -42,16 +43,21 @@ public class JoystickView extends View {
         this.handler = handler;
         color_in = new Paint(Paint.ANTI_ALIAS_FLAG);
         color_out = new Paint(Paint.ANTI_ALIAS_FLAG);
-        color_in.setColor(Color.BLUE);
-        color_out.setColor(Color.YELLOW);
-        int mWidth= this.getResources().getDisplayMetrics().widthPixels;
-        int mHeight= this.getResources().getDisplayMetrics().heightPixels;
-        x_in = mWidth / 2;
-        y_in = mHeight / 2;
-        x_out = mWidth / 2;
-        y_out = mHeight / 2;
+        color_in.setColor(Color.WHITE);
+        color_out.setColor(Color.MAGENTA);
+
+        int mWidth= context.getResources().getDisplayMetrics().widthPixels;
+        int mHeight= context.getResources().getDisplayMetrics().heightPixels;
+        x_in = (float) mWidth / 2 - getPaddingLeft() - getPaddingRight();
+        y_in = (float)mHeight / 2;
+        x_out = (float)mWidth / 2 - getPaddingLeft() - getPaddingRight();
+        Log.d("tag", Integer.toString(getLeftPaddingOffset()));
+
+        y_out = (float)mHeight / 2;
         x_cur = x_in;
         y_cur = y_in;
+        r_out = (int)(x_out - x_out / 100) ;
+        r_in = (int)r_out / 5;
 
     }
     @Override
