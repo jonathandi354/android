@@ -13,20 +13,33 @@ import android.view.View;
 import androidx.core.view.MotionEventCompat;
 
 public class JoystickView extends View {
+    interface MoveHandler {
+        void handle(float x, float y);
+    }
+    private MoveHandler handler;
     private Paint color_in;
     private Paint color_out;
     private int r_in = 100;
     private int r_out = 500;
-    private int x_in;
-    private int y_in;
-    private int x_out;
-    private int y_out;
+//    private int x_in;
+//    private int y_in;
+//    private int x_out;
+//    private int y_out;
+    private float x_in;
+    private float y_in;
+    private float x_out;
+    private float y_out;
+
     private boolean move = false;
     private boolean pressed = false;
-    private int x_cur;
-    private int y_cur;
-    public JoystickView(Context context) {
+//    private int x_cur;
+//    private int y_cur;
+    private float x_cur;
+    private float y_cur;
+    public JoystickView(Context context, MoveHandler handler) {
         super(context);
+
+        this.handler = handler;
         color_in = new Paint(Paint.ANTI_ALIAS_FLAG);
         color_out = new Paint(Paint.ANTI_ALIAS_FLAG);
         color_in.setColor(Color.BLUE);
@@ -81,9 +94,14 @@ public class JoystickView extends View {
                 float y = event.getY();
 
                 if (inside_bounderies(x,y)) {
-                    x_cur = (int)x;
-                    y_cur = (int)y;
+//                    x_cur = (int)x;
+//                    y_cur = (int)y;
+                    x_cur = x;
+                    y_cur = y;
                     //send to someone....
+                    int mWidth= this.getResources().getDisplayMetrics().widthPixels;
+                    int mHeight= this.getResources().getDisplayMetrics().heightPixels;
+                    handler.handle((x_cur - mWidth) / (r_out - r_in) , (y_cur - mHeight)/(r_out - r_in));
                     invalidate();
                 }
                 break;

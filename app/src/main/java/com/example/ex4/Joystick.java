@@ -4,8 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 
 public class Joystick extends AppCompatActivity {
+
+    private Client client;
+
+    private void func(final float x,final float y) {
+        // Send message
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                String aileron = "set /controls/flight/aileron "+ x +"\r\n";
+                client.send(aileron);
+                String elevator = "set /controls/flight/elevator " + y + "\r\n";
+                client.send(elevator);
+            }
+        };
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,8 +32,39 @@ public class Joystick extends AppCompatActivity {
         Intent intent = getIntent();
         String ip = intent.getStringExtra("ip");
         String port = intent.getStringExtra("port");
-        setContentView(new JoystickView(this));
+        //final Client client = new Client(ip, Integer.parseInt(port));
+        client = new Client(ip, Integer.parseInt(port));
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                client.Connect();
+            }
+        };
+
+        thread.start();
+
+        View view = new JoystickView(this, new JoystickView.MoveHandler() {
+            @Override
+            public void handle(float x, float y) {
+                Joystick.this.func(x,y);
+            }
+        });
+
+        setContentView(view);
+
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                client.Disconnect();
+            }
+        };
+
+    }
+
 
 
 }

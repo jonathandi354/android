@@ -42,7 +42,9 @@ public class Client {
     }
     public void Disconnect() {
         try {
+            stream.close();
             socket.close();
+
         } catch (Exception e) {
 
         }
