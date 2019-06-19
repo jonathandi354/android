@@ -22,6 +22,7 @@ public class Joystick extends AppCompatActivity {
                 client.send(elevator);
             }
         };
+        thread.start();
 
 
     }
@@ -62,6 +63,7 @@ public class Joystick extends AppCompatActivity {
                 client.Disconnect();
             }
         };
+        thread.start();
 
     }
 

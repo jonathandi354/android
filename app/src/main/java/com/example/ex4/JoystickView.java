@@ -101,7 +101,7 @@ public class JoystickView extends View {
                     //send to someone....
                     int mWidth= this.getResources().getDisplayMetrics().widthPixels;
                     int mHeight= this.getResources().getDisplayMetrics().heightPixels;
-                    handler.handle((x_cur - mWidth) / (r_out - r_in) , (y_cur - mHeight)/(r_out - r_in));
+                    handler.handle((x_cur - mWidth / 2) / (r_out - r_in) , -(y_cur - mHeight / 2)/(r_out - r_in));
                     invalidate();
                 }
                 break;
