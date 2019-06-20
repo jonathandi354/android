@@ -4,10 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 
-public class Joystick extends AppCompatActivity {
+public class JoystickActivity extends AppCompatActivity {
 
     private Client client;
 
@@ -47,7 +46,7 @@ public class Joystick extends AppCompatActivity {
         View view = new JoystickView(this, new JoystickView.MoveHandler() {
             @Override
             public void handle(float x, float y) {
-                Joystick.this.func(x,y);
+                JoystickActivity.this.func(x,y);
             }
         });
 
