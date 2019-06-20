@@ -43,7 +43,7 @@ public class JoystickView extends View {
         this.handler = handler;
         color_in = new Paint(Paint.ANTI_ALIAS_FLAG);
         color_out = new Paint(Paint.ANTI_ALIAS_FLAG);
-        color_in.setColor(Color.WHITE);
+        color_in.setColor(Color.BLUE);
         color_out.setColor(Color.MAGENTA);
 
         int mWidth= context.getResources().getDisplayMetrics().widthPixels;
