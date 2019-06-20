@@ -13,6 +13,8 @@ import android.view.View;
 
 import androidx.core.view.MotionEventCompat;
 
+import static java.lang.Math.min;
+
 public class JoystickView extends View {
     interface MoveHandler {
         void handle(float x, float y);
@@ -56,7 +58,7 @@ public class JoystickView extends View {
         y_out = (float)mHeight / 2;
         x_cur = x_in;
         y_cur = y_in;
-        r_out = (int)(x_out - x_out / 100) ;
+        r_out = min((int)(x_out - x_out / 100), (int)(y_out - y_out / 100));
         r_in = (int)r_out / 5;
 
     }
